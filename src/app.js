@@ -22,15 +22,15 @@ app.controller('locations',['$scope','$window','selectedData',function(scope,$wi
         var loc=data.data.locations[args[0]];
         scope.category=loc.branches[args[1]].categories
         //toggleCategories();
-        var host=$window.location.host;
-        var url=host+'/category'
-        $window.location.href=url;
+        // var host=$window.location.host;
+        // var url=host+'/category'
+        // $window.location.href=url;
         // selectedData.set(arguments);
-         //$location.path('/category');
+         $location.path('/category');
     }
     scope.goToSubCategory=function(index){
         scope.subCategory=scope.category[index].subcategories;
-        //$location.path('/subcategory');
+        $location.path('/subcategory');
         //toggleCategories();
     }
     scope.goBack=function(){
