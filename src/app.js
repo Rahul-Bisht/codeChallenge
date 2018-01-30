@@ -1,45 +1,22 @@
 var app =angular.module('myApp',['ngRoute']);
-app.factory('selectedData',function(){
-    var _data;
-    function getData(){
-        return _data;
-    }
-    function setData(data){
-        _data=data;
-    }
-    return{get:getData,set:setData}
-})
 
 app.controller('locations',['$scope','$location','selectedData',function(scope,$location,selectedData){
     scope.category=[];
     scope.subCategory=[];
-    scope.isCategory=false;
-    scope.isSubCategory=true;
     scope.goToCategory=function(){
         
         var args=arguments;
         if (!args) return;
         var loc=data.data.locations[args[0]];
         scope.category=loc.branches[args[1]].categories
-        //toggleCategories();
-        // var host=$window.location.host;
-        // var url=host+'/category'
-        // $window.location.href=url;
-        // selectedData.set(arguments);
          $location.path('/category');
     }
     scope.goToSubCategory=function(index){
         scope.subCategory=scope.category[index].subcategories;
         $location.path('/subcategory');
-        //toggleCategories();
     }
     scope.goBack=function(){
-        //toggleCategories();
-    }
-
-    function toggleCategories(){
-        scope.isCategory=!scope.isCategory;
-        scope.isSubCategory=!scope.isSubCategory;
+        $location.path('/category');
     }
 }]);
 app.controller('category',['$scope','selectedData',function(scope,selectedData){

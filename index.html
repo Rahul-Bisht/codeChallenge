@@ -11,8 +11,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.min.js"></script>
     <script src="data/catalog.json"></script>
-    <script src="src/app.js"></script>    
-    <script src="src/route.js"></script>    
+    <script src="src/app.js"></script>
+    <script src="src/route.js"></script>
     <link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -29,28 +29,15 @@
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Location
                         <span class="caret"></span>
                     </button>
-                   <!-- list  goes here-->
-                   <drop-down></drop-down>
+                    <!-- list  goes here-->
+                    <drop-down></drop-down>
 
                 </div>
             </nav>
         </div>
         <div class="row middle">
             <div class="content container">
-                <!-- <div class="col-md-3 box" ng-repeat="img in category" ng-if="isCategory">
-                    <div class="box">
-                            <img src="images/{{img.image}}" alt="{{img.name}}"></img>
-                            <div class="strip">{{img.name}}<a href='#' ng-click="goToSubCategory($index)"><span class=" caret-right"></span></a></div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-3 box" ng-repeat="img in subCategory" ng-if="isSubCategory">
-                        <div class="box">
-                                <img src="images/subcategory/{{img.image}}" alt="{{img.name}}"></img>
-                                <div class="strip">{{img.name}}<a href='#' ng-click="goBack()"><span class=" caret-right"></span></a></div>
-                        </div>
-                        
-                    </div> -->
+
                 <ng-view>
 
                 </ng-view>
@@ -61,16 +48,7 @@
             <footer>copyright &copy; test </footer>
         </div>
     </div>
-    <script>
-     
-        // $(document).ready(function () {
-        //     $('.dropdown-submenu a.expand').on("click", function (e) {
-        //         $(this).next('ul').toggle();
-        //         e.stopPropagation();
-        //         e.preventDefault();
-        //     });
-        // });
-    </script>
+
 </body>
 
 </html>
