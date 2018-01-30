@@ -10,7 +10,7 @@ app.factory('selectedData',function(){
     return{get:getData,set:setData}
 })
 
-app.controller('locations',['$scope','$window','selectedData',function(scope,$window,selectedData){
+app.controller('locations',['$scope','$location','selectedData',function(scope,$location,selectedData){
     scope.category=[];
     scope.subCategory=[];
     scope.isCategory=false;
