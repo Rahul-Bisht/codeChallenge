@@ -18,7 +18,7 @@
 
 <body ng-app="myApp">
 
-    <div class="container-fluid main" ng-controller="locations">
+    <div class="container-fluid main" ng-controller="mainCtrl">
 
         <div class="row">
             <nav class="navbar navbar-default">
@@ -37,7 +37,12 @@
         </div>
         <div class="row middle">
             <div class="content container">
-
+                <!-- <nav aria-label="breadcrumb" ng-if="breadCrumb.getAll().length>0"> -->
+                    <ol class="breadcrumb bcrumb">
+                      <li class="breadcrumb-item" ng-repeat="brd in breadCrumb.getAll()"><a href="#">{{brd}}</a></li>
+                      
+                    </ol>
+                  <!-- </nav> -->
                 <ng-view>
 
                 </ng-view>
