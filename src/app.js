@@ -29,17 +29,22 @@ app.controller('category',['$scope','selectedData',function(scope,selectedData){
 }]);
 
 
-app.directive('dropDown',function($compile){
+app.directive('dropDown',function($compile,$http){
     return{
         restrict:'E',
         compile:function(elem,attr){
             return{
                 pre:function(scope,iElem,iAttr){
                     scope.location=[];
-                    data &&  (scope.location=data.data.locations);
+                    // /data &&  (scope.location=data.data.locations);
                 },
                 post:function(scope,iElem,iAttr){
-                    var template='<ul class="dropdown-menu"> <li ng-repeat="loc in location" class="dropdown-submenu"> <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}<span class="caret"></span></a> <ul class="dropdown-menu" ng-if="loc.branches.length>0"> <li ng-repeat="branch in loc.branches"> <a href="#" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index,branch.name)" dealerid="{{branch.branch_id}}">{{branch.name}}</a> </li></ul> </li></ul>';
+                    $http.get('/data/catalog_backup.json').then(function(res){
+                        scope.location=res.data.data.locations;
+                    }).catch(function(err){
+                        console.log(err.msg);
+                    });
+                    var template='<ul class="dropdown-menu"> <li ng-repeat="loc in location" class="dropdown-submenu"> <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}<span class="caret"></span></a> <ul class="dropdown-menu" ng-if="loc.branches.length>0"> <li ng-repeat="branch in loc.branches"> <a href="#category" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a> </li></ul> </li></ul>';
                     var linkFunction=$compile(template);
                     var content=linkFunction(scope);
                     var target=$(iElem);
@@ -47,22 +52,18 @@ app.directive('dropDown',function($compile){
                     target.remove();
                     setTimeout(() => {
                         (function(){   
-                            var prev;                        
-                          
+                            var prev; 
                             $('.dropdown-submenu a.expand').on("click", function (e) {
                                 if (prev){
                                     prev.toggle();
                                 }
-                            prev=$(this).next('ul')
+                            prev=$(this).next('ul');
                             prev.toggle();
                             e.stopPropagation();
                             e.preventDefault();
                         });
                         })();
-                        
                     }, 500);
-                    
-                    
                 }
             }
         }

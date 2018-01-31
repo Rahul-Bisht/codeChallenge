@@ -4,7 +4,6 @@ app.config(function ($routeProvider) {
         controller: 'locations'
     }).when('/category', {
         templateUrl: 'views/category.html',
-        //controller: 'category'
     }).when('/subcategory',{
         templateUrl:'views/subcategory.html'
     });
