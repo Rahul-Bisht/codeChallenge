@@ -1,0 +1,11 @@
+<ul class="dropdown-menu">
+    <li ng-repeat="loc in location" class="dropdown-submenu">
+        <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}  <span class="caret"></span></a>
+        <ul class="dropdown-menu" ng-if="loc.branches.length>0">
+
+            <li  ng-repeat="branch in loc.branches">
+                <a href="#category" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a>
+            </li>
+        </ul>
+    </li>
+</ul>
