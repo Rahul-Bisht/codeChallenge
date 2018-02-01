@@ -39,14 +39,38 @@ app.factory('locationData',function(){
 app.factory('breadCrumb',
 ['$rootScope','$location',function($rootScope,$location){
     var brCrumbs=[],breadCrumbService={};
-    var crums={category:{name:'Equipment Category',action:'#category'},
-    subcategory:{name}};
+    var step=0,crums={};
     
     $rootScope.$on('$routeChangeSuccess',function(event,current){
-        var pElements=$location.path().split('/'),result=[];
+        var pElements=$location.path().split('/'),result={};
         pElements.shift();
-        result.push(pElements[0]);
-        brCrumbs=result;
+
+        if (pElements.length<=0) return;
+        var route=pElements[0];
+
+        if (route.trim() === '') {
+            brCrumbs.length = 0;
+            return;
+        }
+
+
+        if(crums.hasOwnProperty(route)){
+            step=crums[route];
+            brCrumbs.splice(step+1);
+
+            for(var key of Object.keys(crums)){
+                if (crums[key]>step){
+                    delete crums[key];
+                }
+            }
+        }
+        else{
+            crums[route]=step;
+            result['action']='#'+route;
+            result['name']=current.params.name ||route;
+            brCrumbs.push(result);
+        }       
+        step=brCrumbs.length;
     });
     breadCrumbService.getAll=function(){
         return brCrumbs;
@@ -62,11 +86,11 @@ function($scope,$location,selectedCategory,selectedSubCategory,locationData,brea
 
     $scope.goToCategory=function(pIndex,cIndex){
         selectedCategory.set({pIndex:pIndex,cIndex:cIndex});//update selected category indexes
-        $location.path('/category');
+        $location.path('/category/Equipment category');
     };
-    $scope.goToSubCategory=function(index){
+    $scope.goToSubCategory=function(index,name){
         selectedSubCategory.set({index:index});//update selected sub-category index
-        $location.path('/subcategory');
+        //$location.path('/subcategory/'+name);
     };
 }]);
 
@@ -104,7 +128,7 @@ app.directive('dropDown',['$compile','$http','locationData',function($compile,$h
                     }).catch(function(err){
                         console.log(err.msg);
                     });
-                    var template='<ul class="dropdown-menu"> <li ng-repeat="loc in location" class="dropdown-submenu"> <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}<span class="caret"></span></a> <ul class="dropdown-menu" ng-if="loc.branches.length>0"> <li ng-repeat="branch in loc.branches"> <a href="#category" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a> </li></ul> </li></ul>';
+                    var template='<ul class="dropdown-menu"> <li ng-repeat="loc in location" class="dropdown-submenu"> <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}<span class="caret"></span></a> <ul class="dropdown-menu" ng-if="loc.branches.length>0"> <li ng-repeat="branch in loc.branches"> <a href="#category/Equipment%20category" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a> </li></ul> </li></ul>';
                     var linkFunction=$compile(template);
                     var content=linkFunction(scope);
                     var target=$(iElem);

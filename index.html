@@ -38,8 +38,11 @@
         <div class="row middle">
             <div class="content container">
                 <!-- <nav aria-label="breadcrumb" ng-if="breadCrumb.getAll().length>0"> -->
-                    <ol class="breadcrumb bcrumb">
-                      <li class="breadcrumb-item" ng-repeat="brd in breadCrumb.getAll()"><a href="#">{{brd}}</a></li>
+                    <ol class="breadcrumb bcrumb" ng-if="breadCrumb.getAll().length>0">
+                      <li class="breadcrumb-item" ng-class="{'active':$last}" ng-repeat="brd in breadCrumb.getAll()">
+                          <a href="{{brd.action}}/Equipment category" ng-if="!$last">{{brd.name}}</a>
+                          <span ng-if="$last">{{brd.name}}</span>
+                        </li>
                       
                     </ol>
                   <!-- </nav> -->
