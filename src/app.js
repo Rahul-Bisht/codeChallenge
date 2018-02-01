@@ -66,8 +66,9 @@ app.factory('breadCrumb',
         }
         else{
             crums[route]=step;
-            result['action']='#'+route;
-            result['name']=current.params.name ||route;
+            var params=current.params;
+            result['action']=params.action;
+            result['name']=params.name;
             brCrumbs.push(result);
         }       
         step=brCrumbs.length;
@@ -79,18 +80,30 @@ app.factory('breadCrumb',
     return breadCrumbService;
 }]);
 
-app.controller('mainCtrl',['$scope','$location','selectedCategory'
+app.controller('mainCtrl',['$scope','$location','$timeout','selectedCategory'
 ,'selectedSubCategory','locationData','breadCrumb',
-function($scope,$location,selectedCategory,selectedSubCategory,locationData,breadCrumb){
+function($scope,$location,$timeout,selectedCategory,selectedSubCategory,locationData,breadCrumb){
     $scope.breadCrumb=breadCrumb;
 
     $scope.goToCategory=function(pIndex,cIndex){
-        selectedCategory.set({pIndex:pIndex,cIndex:cIndex});//update selected category indexes
-        $location.path('/category/Equipment category');
+        if(pIndex!==undefined && cIndex!==undefined){
+            selectedCategory.set({pIndex:pIndex,cIndex:cIndex,name:'Equipment category'});//update selected category indexes
+        }
+        
+        $timeout(function(){
+            $location.path('/category/goToCategory/'+selectedCategory.get().name);
+        });
+        
     };
     $scope.goToSubCategory=function(index,name){
-        selectedSubCategory.set({index:index});//update selected sub-category index
-        //$location.path('/subcategory/'+name);
+        if (index!==undefined){
+            selectedSubCategory.set({index:index,name:name});//update selected sub-category index
+        }
+        
+        $timeout(function(){
+            $location.path('/subcategory/goToSubCategory/'+selectedSubCategory.get().name);
+        });
+        
     };
 }]);
 
@@ -128,7 +141,7 @@ app.directive('dropDown',['$compile','$http','locationData',function($compile,$h
                     }).catch(function(err){
                         console.log(err.msg);
                     });
-                    var template='<ul class="dropdown-menu"> <li ng-repeat="loc in location" class="dropdown-submenu"> <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}<span class="caret"></span></a> <ul class="dropdown-menu" ng-if="loc.branches.length>0"> <li ng-repeat="branch in loc.branches"> <a href="#category/Equipment%20category" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a> </li></ul> </li></ul>';
+                    var template='<ul class="dropdown-menu"> <li ng-repeat="loc in location" class="dropdown-submenu"> <a href="#" class="expand" location="{{loc.name}}" dealerid="{{loc.dealers_id}}">{{loc.name}}<span class="caret"></span></a> <ul class="dropdown-menu" ng-if="loc.branches.length>0"> <li ng-repeat="branch in loc.branches"> <a href="#" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a> </li></ul> </li></ul>';
                     var linkFunction=$compile(template);
                     var content=linkFunction(scope);
                     var target=$(iElem);

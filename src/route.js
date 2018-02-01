@@ -2,10 +2,10 @@ app.config(function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'views/welcome.html',
         controller: 'mainCtrl'
-    }).when('/category/:name', {
+    }).when('/category/:action/:name', {
         templateUrl: 'views/category.html',
         controller: 'category'
-    }).when('/subcategory/:name',{
+    }).when('/subcategory/:action/:name',{
         templateUrl:'views/subcategory.html',
         controller: 'subcategory'
     });
