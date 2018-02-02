@@ -66,8 +66,9 @@ app.factory('breadCrumb',
         }
         else{
             crums[route]=step;
-            result['action']='#'+route;
-            result['name']=current.params.name ||route;
+            var params=current.params;
+            result['action']=params.action;
+            result['name']=params.name;
             brCrumbs.push(result);
         }       
         step=brCrumbs.length;
@@ -79,23 +80,29 @@ app.factory('breadCrumb',
     return breadCrumbService;
 }]);
 
-app.controller('mainCtrl',['$scope','$location','$timeout','selectedCategory'
+app.controller('mainCtrl',['$scope','$location','$timeout','$window','selectedCategory'
 ,'selectedSubCategory','locationData','breadCrumb',
-function($scope,$location,$timeout,selectedCategory,selectedSubCategory,locationData,breadCrumb){
+function($scope,$location,$timeout,$window,selectedCategory,selectedSubCategory,locationData,breadCrumb){
     $scope.breadCrumb=breadCrumb;
 
     $scope.goToCategory=function(pIndex,cIndex){
-        selectedCategory.set({pIndex:pIndex,cIndex:cIndex});//update selected category indexes
+        if(pIndex!==undefined && cIndex!==undefined){
+            selectedCategory.set({pIndex:pIndex,cIndex:cIndex,name:'Equipment category'});//update selected category indexes
+        }
+        
         $timeout(function(){
-            $location.path('/category/Equipment category');
-        });
+            $window.location.href='http://'+$location.$$host+':'+$location.$$port+'/#'+'/category/goToCategory/'+selectedCategory.get().name;
+        },0);
         
     };
     $scope.goToSubCategory=function(index,name){
-        selectedSubCategory.set({index:index});//update selected sub-category index
+        if (index!==undefined){
+            selectedSubCategory.set({index:index,name:name});//update selected sub-category index
+        }        
         $timeout(function(){
-            $location.path('/subcategory/'+name);
-        });
+            $window.location.href='http://'+$location.$$host+':'+$location.$$port+'/#'+'/subcategory/goToSubCategory/'+selectedSubCategory.get().name;
+        },0);
+        
     };
 }]);
 

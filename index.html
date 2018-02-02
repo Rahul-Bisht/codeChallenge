@@ -40,7 +40,7 @@
                 <!-- <nav aria-label="breadcrumb" ng-if="breadCrumb.getAll().length>0"> -->
                     <ol class="breadcrumb bcrumb" ng-if="breadCrumb.getAll().length>0">
                       <li class="breadcrumb-item" ng-class="{'active':$last}" ng-repeat="brd in breadCrumb.getAll()">
-                          <a href="{{brd.action}}/Equipment category" ng-if="!$last">{{brd.name}}</a>
+                          <a href="#" ng-click="this[brd.action]()" ng-if="!$last">{{brd.name}}</a>
                           <span ng-if="$last">{{brd.name}}</span>
                         </li>
                       
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="row footer">
-            <footer>copyright &copy; test </footer>
+            <footer>Rahul Singh Bisht </footer>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 <div class="col-md-3" ng-repeat="img in category">
     <div class="box">
-        <img src="images/{{img.image}}" alt="{{img.name}}"></img>
+        <img ng-src="images/{{img.image}}" alt="{{img.name}}"></img>
         <div class="strip">{{img.name}}
             <a href='#' ng-click="goToSubCategory($index,img.name)">
                 <span class=" caret-right"></span>

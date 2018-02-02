@@ -1,11 +1,8 @@
 <div class="col-md-3 " ng-repeat="img in subCategory" >
     <div class="box">
-        <img src="images/subcategory/{{img.image}}" alt="{{img.name}}"></img>
+        <img ng-src="images/subcategory/{{img.image}}" alt="{{img.name}}"></img>
         <div class="strip">{{img.name}}
                 <span class=" caret-right"></span>
-            <!-- <a href='#'>
-                <span class=" caret-right"></span>
-            </a> -->
         </div>
     </div>
 </div>
