@@ -4,7 +4,7 @@
         <ul class="dropdown-menu" ng-if="loc.branches.length>0">
 
             <li  ng-repeat="branch in loc.branches">
-                <a href="#category/Equipment category" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a>
+                <a href="#" class="expand" branch="{{branch.name}}" ng-click="goToCategory($parent.$index,$index)" dealerid="{{branch.branch_id}}">{{branch.name}}</a>
             </li>
         </ul>
     </li>
